@@ -118,8 +118,12 @@ const Bottomhero = () => {
                 iC: ['Rein', 'Zarya', 'Hanzo','Mei','Mercy','Ana']
             },
             {
-                combination: ['Ashe', 'Ball', 'Torb'],
-                iC: ['Tracer', 'Genji', 'Orisa']
+                combination: ['Ball','Zarya','Ashe','Reaper','Bap','Mercy'],
+                iC: ['Rein', 'Orisa', 'Junkrat','Soldier','Ana','Mercy']
+            },
+            {
+                combination: ['Orisa','Sigma','Bastion','Soldier','Ana','Mercy'],
+                iC: ['Rein','Zarya','Junkrat','Soldier','Ana','BapR']
             }
         ]
 
