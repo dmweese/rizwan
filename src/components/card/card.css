@@ -26,5 +26,10 @@ img {
   	-webkit-box-shadow: 4px 3px 8px 1px #969696;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+p {
+  font-family: 'Cairo';
+  align-self: center;
+}
 .grow { transition: all .2s ease-in-out; }
 .grow:hover { transform: scale(1.25); }

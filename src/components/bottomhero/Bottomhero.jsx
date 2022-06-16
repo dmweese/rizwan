@@ -3,12 +3,13 @@ import './bottomhero.css'
 import { useState, useContext, useEffect } from 'react'
 import { CardContext } from '../CardContext'
 import '../App.css'
+import { isEqual, sortBy } from 'lodash'
 
 const Bottomhero = () => {
 
     // accessing all above mentioned states from CardContext.js
     const { selectedCard, setSelectedCard, cards, setCards, idealCards, setIdealCards } = useContext(CardContext);
-    const [idealTeam,setItdealTeam] = useState([])
+    const [idealTeam, setItdealTeam] = useState([])
     useEffect(() => {
         addHeroToIdealTeam(cards);
     }, [cards])
@@ -104,59 +105,42 @@ const Bottomhero = () => {
 
         //if tank 1 = bob and tank 2 = joe then output team y
         //if tank 1 = john and tank 2 = joe then output team x
-        
+
     }
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        //
-     
+
+        console.log(selectedCard)
         const combinations = [
             {
-                combination : ['Ashe','Mccree','Rein'],
-                iC : ['Doomfist','Mccree','Reaper']
+                combination: ['Rein', 'Zarya', 'Soldier','Pharah','Bap','Ana'],
+                iC: ['Rein', 'Zarya', 'Hanzo','Mei','Mercy','Ana']
             },
             {
-                combination : ['Ashe','Ball','Torb'],
-                iC : ['Tracer','Genji','Orisa']
+                combination: ['Ashe', 'Ball', 'Torb'],
+                iC: ['Tracer', 'Genji', 'Orisa']
             }
         ]
 
-        const getCombs = () => {
-            const trueArray = [];
-            let idealCards;
-             combinations.map((ele,index) =>{
-                 selectedCard.map(selCard=>{
-                    if(ele.combination.includes(selCard.cardName)){
-                        trueArray.push('true');
-                        
-                    }else{
-                        trueArray.push('false')
-                    }
-                })
-                
-            })
-            // for(let i=0;i<combinations.length;i++){
-            //     for(let j=0; j<selectedCard.length;j++){
-            //         combinations[i].combination
-            //     }
-            // }
-            // combinations.map((ele,index)=>{
+        if (selectedCard.length === 6) {
 
 
-            //     console.log(trueArray.map((trueCard)=>{
-            //    if(ele.combination.includes(trueCard.cardName)){
-            //        console.log(index)
-            //        return combinations[index].iC
-            //    }
-            // }))
-            // })
-            return trueArray;
+            let a = selectedCard.map(x => x.cardName)
+            let iC = [];
+            for (let i = 0; i < combinations.length; i++) {
+                if (isEqual(sortBy(a), sortBy(combinations[i].combination))) {
+                    iC = combinations[i].iC;
+                    break;
+                }
+            }
+            setItdealTeam(iC)
+        } else {
+            setItdealTeam([])
         }
 
-        console.log(getCombs())
 
-    },[selectedCard])
+    }, [selectedCard])
 
     return (
         <div>
@@ -164,11 +148,11 @@ const Bottomhero = () => {
                 <h3>IDEAL TEAM</h3>
                 <div className='row'>
                     {
-                        idealTeam.map(card=>{
-                            return   <Card cardSize={'little-card'} hero={card.cardName} />
+                        idealTeam.map(card => {
+                            return <Card cardSize={'little-card'} hero={card} />
                         })
                     }
-                  
+
                 </div>
             </div>
             <div>
@@ -178,7 +162,7 @@ const Bottomhero = () => {
                         selectedCard.length > 0 ? selectedCard.map((card, index) => (<div key={index} onClick={() => removeHeroFromTheTop(card)} ><Card key={index} cardSize={'little-card'} hero={card.cardName} /> </div>)) : <Card cardSize={'little-card'} />
                     }
                 </div>
-                
+
             </div>
 
 
@@ -190,13 +174,13 @@ const Bottomhero = () => {
                     <div className="row">
                         <i className="gg-shield"></i>
                         {
-                            cards.tanks.map((card, index) => <div key={index} onClick={() => addHeroToTheTop(card)} ><Card cardSize={'little-card'} hero={card} /> </div>)
+                            cards.tanks.map((card, index) => <div key={index} onClick={() => addHeroToTheTop(card)} ><Card cardSize={'little-card'} hero={card} /> <p>{card}</p> </div>)
                         }
                     </div>
                     <div className="row">
                         <i className="gg-track"></i>
                         {
-                            cards.damage.map((card, index) => <div key={index} onClick={() => addHeroToTheTop(card)}>
+                            cards.damage.map((card, index) => <div key={index} onClick={() => addHeroToTheTop(card)}> <p>{card}</p>
                                 <Card cardSize={'little-card'} hero={card} />
                             </div>)
                         }
@@ -204,7 +188,7 @@ const Bottomhero = () => {
                     <div className="row">
                         <i className="gg-swiss"></i>
                         {
-                            cards.support.map((card, index) => <div key={index} onClick={() => addHeroToTheTop(card)}>
+                            cards.support.map((card, index) => <div key={index} onClick={() => addHeroToTheTop(card)}> <p>{card}</p>
                                 <Card cardSize={'little-card'} hero={card} />
                             </div>
                             )
